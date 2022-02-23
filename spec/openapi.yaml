@@ -10,7 +10,7 @@ tags:
   - name: Flavor List
 components:
   schemas:
-    FlavorItem:
+    FlavorItemDto:
       type: object
       required:
         - ingredients
@@ -18,17 +18,40 @@ components:
       properties:
         id:
           type: string
-          description: The flavor auto-generated ID
         ingredients:
           type: string
-          description: The flavor ingredients
         name:
           type: string
-          description: The flavor name
       example:
-        id: "1234567890"
+        id: "123"
         ingredients: vanilla, black cherry
         name: black cherry
+    FlavorItemCreateDto:
+      type: object
+      required:
+        - ingredients
+        - name
+      properties:
+        ingredients:
+          type: string
+        name:
+          type: string
+      example:
+        ingredients: egg yolk, bacon, egg, cheese
+        name: baconeggncheese
+    FlavorItemUpdateDto:
+      type: object
+      required:
+        - ingredients
+        - name
+      properties:
+        ingredients:
+          type: string
+        name:
+          type: string
+      example:
+        ingredients: honey, egg yolk, coffee soil
+        name: budget breakfast
 paths:
   /flavor-list:
     get:
@@ -43,7 +66,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/FlavorItem"
+                  $ref: "#/components/schemas/FlavorItemDto"
     post:
       summary: Create a new flavor item
       tags:
@@ -53,14 +76,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FlavorItem"
+              $ref: "#/components/schemas/FlavorItemCreateDto"
       responses:
         200:
           description: The flavor item was successfully created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FlavorItem"
+                $ref: "#/components/schemas/FlavorItemDto"
         500:
           description: Some server error
   /flavor-list/{id}:
@@ -80,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FlavorItem"
+                $ref: "#/components/schemas/FlavorItemDto"
         404:
           description: The flavor item was not found
     patch:
@@ -98,14 +121,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FlavorItem"
+              $ref: "#/components/schemas/FlavorItemUpdateDto"
       responses:
         200:
           description: The flavor item was updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FlavorItem"
+                $ref: "#/components/schemas/FlavorItemDto"
         404:
           description: The flavor item was not found
         500:
