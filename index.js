@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { Low, JSONFile } from "lowdb";
-import { booksRouter } from "./routes/books.js";
+import { flavorListRouter } from "./routes/flavor-list.js";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 
@@ -15,7 +15,7 @@ const db = new Low(adapter);
 
 // add default data
 await db.read();
-db.data ||= { books: [] };
+db.data ||= { flavorList: [] };
 await db.write();
 app.db = db;
 
@@ -26,7 +26,7 @@ const swaggerDocument = YAML.load("./spec/openapi.yaml");
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/books", booksRouter);
+app.use("/flavor-list", flavorListRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, () => console.log(`The server is running on port ${PORT}`));
