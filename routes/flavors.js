@@ -32,7 +32,7 @@ flavorsRouter.post("/", async (req, res) => {
     const flavor = {
       id: nanoid(),
       ingredients: req.body.ingredients,
-      name: req.body.flavor,
+      name: req.body.name,
     };
 
     flavors.push(flavor);
@@ -57,7 +57,7 @@ flavorsRouter.patch("/:id", async (req, res) => {
         flavorUpdated = {
           ...flavor,
           ingredients: req.body.ingredients,
-          name: req.body.flavor,
+          name: req.body.name,
         };
 
         return flavorUpdated;
